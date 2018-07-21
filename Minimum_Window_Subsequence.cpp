@@ -13,7 +13,7 @@ public:
         string ans; 
         
         for( int i=0; i<=S.size(); i++ )
-            dp[i][0] = i;
+            dp[i][0] = i+1;
         
         for( int i=1; i<=S.size(); i++ )
         {
@@ -24,10 +24,10 @@ public:
                 else
                     dp[i][k] = dp[i-1][k];
             }
-            if( dp[i][T.size()] != -1  && (i-dp[i][T.size()]) < min_len )
+            if( dp[i][T.size()] != -1  && (i-dp[i][T.size()]+1) < min_len )
             {
-                min_len = (i-dp[i][T.size()]);
-                ans = S.substr(dp[i][T.size()], (i-dp[i][T.size()]));
+                min_len = (i-dp[i][T.size()]+1);
+                ans = S.substr(dp[i][T.size()]-1, (i-dp[i][T.size()]+1));
             }
         }
         return ans;
