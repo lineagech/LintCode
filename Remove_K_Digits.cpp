@@ -1,12 +1,6 @@
 class Solution {
 public:
-    /**
-     * @param num: a string
-     * @param k: an integer
-     * @return: return a string
-     */
-    string removeKdigits(string &num, int k) {
-        // write your code here
+    string removeKdigits(string num, int k) {
         stack<char> stack;
         int len = num.size()-k;
         
@@ -30,6 +24,6 @@ public:
         }   
         reverse(ans.begin(), ans.end());
         while( ans[0] == '0' ) ans.erase(0,1);
-        return (ans=="") ? "0" : ans;
+        return (ans=="") ? "0" : ans.substr(0,len);
     }
 };
