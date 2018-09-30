@@ -1,0 +1,50 @@
+class Solution {
+public:
+    /**
+     * @param word: the given word
+     * @return: the generalized abbreviations of a word
+     */
+    vector<string> generateAbbreviations(string &word) {
+        // Write your code here
+        vector<string> ans;
+        unordered_set<string> hash;
+        helper(word, ans, hash);
+        return ans;
+    }
+    void helper(string &word, vector<string>& ans, unordered_set<string>& hash)
+    {   
+        if( hash.find(word) != hash.end() ) return;
+        ans.emplace_back(word);
+        hash.insert(word);
+        
+        int word_len = word.size();
+        for( int i = 0; i < word_len; i++ )
+        {
+            if( isalpha(word[i]) )
+            {
+                int front_start = i-1, front_stop = i;
+                int back_start = i+1, back_stop = i+1;
+                // front word
+                while( front_start >= 0 && isdigit(word[front_start]) )
+                    front_start--;
+                front_start++;
+                
+                // back word
+                while( back_stop < word_len && isdigit(word[back_stop]) )
+                    back_stop++;
+                
+                // replace to new abbreviation number
+                int front_num = 0, back_num = 0, replace_num = 1;
+                if( front_stop-front_start > 0 ) 
+                    front_num = stoi(word.substr(front_start, front_stop-front_start));
+                if( back_stop-back_start > 0 ) 
+                    back_num = stoi(word.substr(back_start, back_stop-back_start));
+                
+                replace_num += (front_num+back_num);
+                string new_abbrev_word = word.substr(0, front_start) + to_string(replace_num) + word.substr(back_stop);
+                helper(new_abbrev_word, ans, hash);
+            }
+        }
+    }
+    
+};
