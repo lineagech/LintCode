@@ -8,7 +8,7 @@ public:
     /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
     bool insert(int val) {
         nums.push_back(val);
-        hash[val].push(nums.size()-1);
+        hash[val].insert(nums.size()-1);
         return (hash[val].size() == 1);
     }
     
@@ -16,14 +16,13 @@ public:
     bool remove(int val) {
         if( hash.find(val) == hash.end() || hash[val].empty() )
             return false;
-        int swap_index = hash[val].top();
-        hash[val].pop();
         
-        if( swap_index != nums.size()-1 )
-        {
+        int swap_index = *(hash[val].begin());
+        hash[val].erase(hash[val].begin());
+        if( swap_index != nums.size()-1 ) {
             nums[swap_index] = nums.back();
-            hash[nums.back()].pop();
-            hash[nums.back()].push(swap_index);
+            hash[nums.back()].erase(nums.size()-1);
+            hash[nums.back()].insert(swap_index);
         }
         nums.pop_back();
         return true;
@@ -34,7 +33,7 @@ public:
         return nums[(rand() % nums.size())];
     }
     vector<int> nums;
-    unordered_map<int,priority_queue<int>> hash;
+    unordered_map<int,unordered_set<int>> hash;
 };
 
 /**
