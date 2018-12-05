@@ -29,7 +29,7 @@ public:
         }
         /* find min value */
         long long con_min_val = INT_MAX, min_val = INT_MAX;
-        for( int i = 0; i < A.size(); i++ )
+        for( int i = 0; i < A.size()-1; i++ )
         {
             if( con_min_val + A[i] > A[i] ) {
                 con_min_val = A[i];
@@ -39,7 +39,7 @@ public:
                 con_min_val += A[i];
             }
             curr_end = i;
-            if( con_min_val < min_val && total-con_min_val > max_val && !(curr_start==0 && curr_end==n-1) )
+            if( con_min_val < min_val && total-con_min_val > max_val )
             {
                 min_val = con_min_val;
                 max_val = total-con_min_val;
